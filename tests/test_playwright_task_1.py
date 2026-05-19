@@ -1,26 +1,22 @@
-
 import faker
-from playwright.sync_api import expect
+
+BASE_URL = "http://144.31.63.127:5000/"
+fake = faker.Faker()
 
 
 def test_login_page(page):
-    fake = faker.Faker()
-    base_url = "http://144.31.139.115:5000/"
-    page.goto(base_url)
-    page.get_by_role("link", name="Login", exact=False).click()
-    page.wait_for_url("**/login")
-    page.locator("input[name='username']").fill(fake.email())
-    page.locator("input[name='password']").fill(fake.password())
-    confirm_button = page.get_by_role("button", name="Confirm", exact=False)
+    EXPECTED_ERROR_TEXT = "Invalid login or password."
+    page.goto(BASE_URL)
+    page.get_by_test_id("nav-login").click()
+    page.get_by_test_id("login-username").fill(fake.email())
+    page.get_by_test_id("login-password").fill(fake.password())
+    confirm_button = page.get_by_test_id("login-submit")
     confirm_button.click()
-    spinner = page.locator("span[data-testid='login-submit-spinner']")
-    spinner.wait_for(state="visible", timeout=2000)
-    expect(spinner).to_be_visible()
-    expect(page.get_by_text("Invalid login or password.")).to_be_visible()
-
-
-
-
-
-
-
+    spinner = page.get_by_test_id("login-submit-spinner")
+    spinner.wait_for(state="visible")
+    spinner.wait_for(state="detached")
+    login_error = page.get_by_test_id("login-error-inline")
+    received_error_text = login_error.inner_text()
+    assert received_error_text == EXPECTED_ERROR_TEXT, (
+        f"Expected text - {EXPECTED_ERROR_TEXT}, but got {received_error_text}"
+    )
