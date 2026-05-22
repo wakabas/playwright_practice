@@ -27,10 +27,14 @@ def test_search_page(name: str, n: int, filter_type: str, page, url):
                 current_num <= next_num
                 for current_num, next_num in zip(price_list, price_list[1:])
             )
-            assert result, f"Sorting by {filter_type}, expected {True}, received {result}"
+            assert result, (
+                f"Sorting by {filter_type}, expected {True}, received {result}"
+            )
         case Options.DESC:
             result = all(
                 current_num <= next_num
                 for current_num, next_num in zip(price_list, price_list[1:])
             )
-            assert result, f"Sorting by {filter_type}, expected {True}, received {result}"
+            assert result, (
+                f"Sorting by {filter_type}, expected {True}, received {result}"
+            )
