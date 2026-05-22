@@ -5,7 +5,7 @@ fake = faker.Faker()
 
 
 def test_login_page(page):
-    EXPECTED_ERROR_TEXT = "Invalid login or password."
+    expected_error_text = "Invalid login or password."
     page.goto(BASE_URL)
     page.get_by_test_id("nav-login").click()
     page.get_by_test_id("login-username").fill(fake.email())
@@ -17,6 +17,6 @@ def test_login_page(page):
     spinner.wait_for(state="detached")
     login_error = page.get_by_test_id("login-error-inline")
     received_error_text = login_error.inner_text()
-    assert received_error_text == EXPECTED_ERROR_TEXT, (
-        f"Expected text - {EXPECTED_ERROR_TEXT}, but got {received_error_text}"
+    assert received_error_text == expected_error_text, (
+        f"Expected text - {expected_error_text}, but got {received_error_text}"
     )
