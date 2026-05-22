@@ -23,12 +23,14 @@ def test_search_page(name: str, n: int, filter_type: str, page, url):
     price_list = search_page.get_article_prices(n)
     match filter_type:
         case Options.ASC:
-            assert all(
+            result = all(
                 current_num <= next_num
                 for current_num, next_num in zip(price_list, price_list[1:])
             )
+            assert result, f"Sorting by {filter_type}, expected {True}, received {result}"
         case Options.DESC:
-            assert all(
-                current_num >= next_num
+            result = all(
+                current_num <= next_num
                 for current_num, next_num in zip(price_list, price_list[1:])
             )
+            assert result, f"Sorting by {filter_type}, expected {True}, received {result}"
