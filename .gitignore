@@ -11,3 +11,5 @@ venv/
 test-results/
 playwright-report/
 blob-report/
+
+*_task_1.py
