@@ -1,5 +1,7 @@
 from enum import StrEnum
 
+from playwright.sync_api import Locator
+
 
 class Options(StrEnum):
     ASC = "price_asc"
@@ -7,14 +9,15 @@ class Options(StrEnum):
 
 
 class SearchResultPage:
-    def __init__(self, page):
+    def __init__(self, page, num_of_articles: int | None = None):
         self.page = page
         self.results_loader = page.get_by_test_id("results-loader-svg")
         self.sort_list = page.get_by_test_id("filter-sort")
         self.apply_button = page.get_by_test_id("apply-filters-button")
-        self.list_of_prices = self.page.locator(
-            "[data-testid^='search-result-price-']"
-        ).all()
+        if num_of_articles is not None:
+            self.list_of_prices = self.page.locator(
+                "[data-testid^='search-result-price-']"
+            ).all()[:num_of_articles]
 
     def wait_for_load(self):
         self.results_loader.wait_for(state="visible")
@@ -27,12 +30,8 @@ class SearchResultPage:
         self.wait_for_load()
 
     @staticmethod
-    def _parse_price(price: str):
-        return int(price.split(maxsplit=1)[0])
+    def _parse_price(price: Locator) -> int:
+        return int(price.inner_text().split(maxsplit=1)[0])
 
-    def get_article_prices(self, num_of_articles: int):
-        result = [
-            locator.inner_text()
-            for locator in self.list_of_prices
-        ]
-        return [SearchResultPage._parse_price(price) for price in result][:num_of_articles]
+    def get_article_prices(self) -> list[int]:
+        return [SearchResultPage._parse_price(price) for price in self.list_of_prices]

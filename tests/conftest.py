@@ -2,7 +2,7 @@ import pytest
 
 from models.conf.config_reader import ConfigReader
 
-CONFIG = ConfigReader()
+CONFIG = ConfigReader("models/conf/config.json")
 
 
 @pytest.fixture
