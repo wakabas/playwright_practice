@@ -12,9 +12,9 @@ num_and_filter_types = [(10, Options.ASC), (15, Options.DESC)]
 def test_search_page(name: str, n: int, filter_type: Options, page, url):
     main_page = MainPage(page)
     main_page.page.goto(url)
-    search_page = main_page.search_articles(name, n)
+    search_page = main_page.search_articles(name)
     search_page.sort_by_filter(filter_type)
-    received_price_list = search_page.get_article_prices()
+    received_price_list = search_page.get_article_prices(n)
     match filter_type:
         case Options.ASC:
             expected_price_list = sorted(received_price_list)

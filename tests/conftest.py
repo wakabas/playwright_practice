@@ -7,11 +7,11 @@ CONFIG = ConfigReader("models/conf/config.json")
 
 @pytest.fixture
 def url():
-    url = CONFIG.config["URL"]
+    url = CONFIG["URL"]
     return url
 
 
 @pytest.fixture
 def browser_name():
-    browser_name = CONFIG.config["browser"]
+    browser_name = CONFIG["browser"]
     return browser_name
