@@ -7,7 +7,6 @@ keywords = ["city", "habits"]
 num_and_filter_types = [(10, Options.ASC), (15, Options.DESC)]
 
 
-
 @pytest.mark.parametrize("n, filter_type", num_and_filter_types)
 @pytest.mark.parametrize("name", keywords)
 def test_search_page(name: str, n: int, filter_type: Options, page, url):
@@ -19,7 +18,9 @@ def test_search_page(name: str, n: int, filter_type: Options, page, url):
     match filter_type:
         case Options.ASC:
             expected_price_list = sorted(received_price_list)
-            assert received_price_list == expected_price_list, f"Expected: {expected_price_list}, received: {received_price_list}"
+            assert received_price_list == expected_price_list, \
+                f"Expected: {expected_price_list}, received: {received_price_list}"
         case Options.DESC:
             expected_price_list = sorted(received_price_list, reverse=True)
-            assert received_price_list == expected_price_list, f"Expected: {expected_price_list}, received: {received_price_list}"
+            assert received_price_list == expected_price_list, \
+                f"Expected: {expected_price_list}, received: {received_price_list}"
