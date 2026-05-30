@@ -10,10 +10,10 @@ logger = logging.getLogger(LOGGER_NAME)
 
 class WebElement:
     def __init__(
-            self,
-            locator: Locator,
-            description: str,
-            page: Page | None =None,
+        self,
+        locator: Locator,
+        description: str,
+        page: Page | None = None,
     ) -> None:
         self.page = page
         self.locator = locator
