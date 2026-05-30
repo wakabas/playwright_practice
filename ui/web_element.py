@@ -2,6 +2,7 @@ import logging
 from pathlib import Path
 
 from playwright.sync_api import Locator, Page
+from typing_extensions import Literal
 
 from logger import LOGGER_NAME
 
@@ -71,3 +72,9 @@ class WebElement:
     def set_input_files(self, file_path: Path) -> None:
         logger.info(f"{self}: set input files '{file_path}'")
         self.locator.set_input_files(file_path)
+
+    def wait_for(
+        self, state: Literal["attached", "detached", "hidden", "visible"]
+    ) -> None:
+        logger.info(f"{self}: wait for '{state}'")
+        self.locator.wait_for(state=state)
