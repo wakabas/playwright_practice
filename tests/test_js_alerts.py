@@ -40,7 +40,7 @@ def test_js_alerts_page(page, base_url):
 
 def test_context_area_page(page, base_url):
     context_menu_page = ContextMenuPage(page)
-    context_menu_page.actions.goto(f"{base_url}/context_menu")
+    context_menu_page.action.goto(f"{base_url}/context_menu")
     received_message = context_menu_page.click_on_context_area()
     assert ContextAlertMessage.ALERT_MSG == received_message, (
         f"Expected message {ContextAlertMessage.ALERT_MSG} but got {received_message}"

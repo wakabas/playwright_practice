@@ -1,24 +1,24 @@
-import re
 import logging
+import re
 from enum import StrEnum
 
 from playwright.sync_api import Page
 
-from ui.multi_web_element import MultiWebElement
-from ui.page_actions import PageActions
 from logger import LOGGER_NAME
+from pages.base_page import BasePage
+from ui.multi_web_element import MultiWebElement
 
 logger = logging.getLogger(LOGGER_NAME)
+
 
 class HtmlAttributes(StrEnum):
     AVATAR = "User Avatar"
     USERNAME = "name: user"
 
 
-class HoverPage:
-    def __init__(self, page: Page):
-        self.page = page
-        self.action = PageActions(page)
+class HoverPage(BasePage):
+    def __init__(self, page: Page) -> None:
+        super().__init__(page)
         self.user_avatars = MultiWebElement(
             self.page.get_by_alt_text(HtmlAttributes.AVATAR),
             "Hover page -> user avatars",
@@ -30,15 +30,14 @@ class HoverPage:
             description="Hover page -> user name",
         )
 
-    @classmethod
-    def _format_username_text(cls, username_text: str) -> str:
+    @staticmethod
+    def _format_username_text(username_text: str) -> str:
         result = username_text.split("\n")[0]
         logger.info(f"Hover page -> username formatted '{result}'")
         return result
 
     def _wait_for_visible_avatars(self):
         self.user_avatars.wait_for_first_element()
-
 
     def get_user_names(self) -> list[str]:
         result = []

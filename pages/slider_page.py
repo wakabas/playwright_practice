@@ -1,13 +1,19 @@
+from enum import IntEnum
+
 from playwright.sync_api import Page
 
-from ui.page_actions import PageActions
+from pages.base_page import BasePage
 from ui.web_element import WebElement
 
 
-class SliderPage:
-    def __init__(self, page: Page):
-        self.page = page
-        self.action = PageActions(self.page)
+class SliderBoundaries(IntEnum):
+    MIN = 1
+    MAX = 9
+
+
+class SliderPage(BasePage):
+    def __init__(self, page: Page) -> None:
+        super().__init__(page)
         self.slider = WebElement(
             self.page.locator("//input[@type='range']").and_(
                 self.page.get_by_role("slider")

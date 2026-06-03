@@ -1,4 +1,4 @@
-from pages.basic_auth import BasicAuthPage, SuccessMessage
+from pages.basic_auth_page import BasicAuthPage, SuccessMessage
 from utils.url_utils import embed_credentials_in_url
 
 

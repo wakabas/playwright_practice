@@ -2,8 +2,14 @@ from enum import StrEnum
 
 from playwright.sync_api import Page
 
-from ui.page_actions import PageActions
+from pages.base_page import BasePage
 from ui.web_element import WebElement
+
+
+class ButtonText(StrEnum):
+    JS_ALERT = "Click for JS Alert"
+    JS_CONFIRM = "Click for JS Confirm"
+    JS_PROMPT = "Click for JS Prompt"
 
 
 class AlertMessages(StrEnum):
@@ -18,26 +24,23 @@ class ResultMessages(StrEnum):
     PROMPT_RESULT = "You entered: "
 
 
-class AlertPage:
-    def __init__(self, page: Page):
-        self.page = page
-        self.action = PageActions(self.page)
+class AlertPage(BasePage):
+    def __init__(self, page: Page) -> None:
+        super().__init__(page)
         self.alert_btn = WebElement(
-            self.page.get_by_role("button", name="Click for JS Alert"),
+            self.page.get_by_role("button", name=ButtonText.JS_ALERT),
             description="Alert page -> JS alert button",
         )
         self.confirm_btn = WebElement(
-            self.page.get_by_role("button", name="Click for JS Confirm"),
+            self.page.get_by_role("button", name=ButtonText.JS_CONFIRM),
             description="Alert page -> JS confirm button",
         )
         self.prompt_btn = WebElement(
-            self.page.get_by_role("button", name="Click for JS Prompt"),
+            self.page.get_by_role("button", name=ButtonText.JS_PROMPT),
             description="Alert page -> JS prompt button",
         )
         self.result_text = WebElement(
-            self.page.locator(
-                '//p[@id="result" and starts-with(normalize-space(.), "You")]'
-            ),
+            self.page.locator('//p[@id="result"]'),
             description="Alert page -> JS alert result text",
         )
 
