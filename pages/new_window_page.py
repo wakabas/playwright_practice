@@ -34,3 +34,6 @@ class NewWindowPage(BasePage):
             self.page.get_by_role("heading", name=NameAttrText.NEW_WINDOW_TEXT),
             description="New window page -> text for check",
         )
+
+    def get_new_window_text(self) -> str:
+        return self.text.get_inner_text()

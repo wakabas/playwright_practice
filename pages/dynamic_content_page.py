@@ -14,7 +14,7 @@ class DynamicContentPage(BasePage):
     def __init__(self, page: Page) -> None:
         super().__init__(page)
         self.user_avatars = MultiWebElement(
-            self.page.locator("//*[contains(@class, 'large-2 columns')]/child::img"),
+            self.page.locator("//*//*[contains(@id, 'content')]//*[contains(@class, 'row')]//img"),
             description="Dynamic content page -> user avatars",
         )
 

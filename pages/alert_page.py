@@ -40,7 +40,7 @@ class AlertPage(BasePage):
             description="Alert page -> JS prompt button",
         )
         self.result_text = WebElement(
-            self.page.locator('//p[@id="result"]'),
+            self.page.locator('//*[@id="result"]'),
             description="Alert page -> JS alert result text",
         )
 

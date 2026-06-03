@@ -33,7 +33,7 @@ class HoverPage(BasePage):
     @staticmethod
     def _format_username_text(username_text: str) -> str:
         result = username_text.split("\n")[0]
-        logger.info(f"Hover page -> username formatted '{result}'")
+        logger.debug(f"Hover page -> username formatted '{result}'")
         return result
 
     def _wait_for_visible_avatars(self):

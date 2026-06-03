@@ -4,7 +4,7 @@ from pages.new_window_page import MainWindowPage, NameAttrText, NewWindowPage
 
 
 def verify_text(sub_page: NewWindowPage):
-    actual_text = sub_page.text.get_inner_text()
+    actual_text = sub_page.get_new_window_text()
     assert actual_text == NameAttrText.NEW_WINDOW_TEXT, (
         f"Expected text - {NameAttrText.NEW_WINDOW_TEXT}, but got {actual_text}"
     )

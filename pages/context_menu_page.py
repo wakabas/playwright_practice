@@ -14,7 +14,7 @@ class ContextMenuPage(BasePage):
     def __init__(self, page: Page) -> None:
         super().__init__(page)
         self.context_area = WebElement(
-            self.page.locator('//div[@id="hot-spot"]'),
+            self.page.locator('//*[@id="hot-spot"]'),
             description="Context menu page -> context area with JS message",
         )
 

@@ -19,7 +19,7 @@ class DownloadPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
         self.file_for_download = MultiWebElement(
-            self.page.locator("//div[@id='content']//a"),
+            self.page.locator("//*[@id='content']//a"),
             description="Download page -> links to download file",
         )
 

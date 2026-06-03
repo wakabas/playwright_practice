@@ -17,3 +17,6 @@ class BasicAuthPage(BasePage):
             self.page.get_by_text(SuccessMessage.MESSAGE),
             description="Basic auth page -> Success message",
         )
+
+    def get_success_text(self):
+        return self.success_text.get_inner_text()
