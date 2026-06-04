@@ -1,7 +1,7 @@
 import pytest
 from playwright.sync_api import Page
 
-from pages.frame_page import FrameNames, FramePage, FrameText
+from pages.frame_page import FrameNames, FramePage
 
 
 @pytest.mark.parametrize(

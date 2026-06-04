@@ -6,11 +6,6 @@ from pages.base_page import BasePage
 from ui.web_element import WebElement
 
 
-class SliderBoundaries(IntEnum):
-    MIN = 1
-    MAX = 9
-
-
 class SliderPage(BasePage):
     def __init__(self, page: Page) -> None:
         super().__init__(page)
@@ -26,7 +21,7 @@ class SliderPage(BasePage):
         )
 
     @property
-    def get_slider_values(self):
+    def slider_values(self):
         slider_min = int(float(self.slider.get_attribute("min")))
         slider_max = int(float(self.slider.get_attribute("max")))
         slider_step = float(self.slider.get_attribute("step"))

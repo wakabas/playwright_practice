@@ -54,28 +54,14 @@ class FramePage(BasePage):
             description="Frame page -> bottom frame"
         )
 
-    def get_frame_text(self, frame_name: StrEnum) -> str:
-        frame_attr = "_".join(frame_name.split('-'))
-        return self.__getattribute__(frame_attr).get_inner_text()
-
+    def get_frame_text(self, frame_name: FrameNames) -> str:
+        return self.frames[frame_name].get_inner_text()
 
     @property
     def frames(self):
         return {
-            FrameNames.LEFT_NAME: WebElement(
-                self.page.frame(name=FrameNames.LEFT_NAME).locator("body"),
-                description="Frame page -> left frame",
-            ),
-            FrameNames.MIDDLE_NAME: WebElement(
-                self.page.frame(name=FrameNames.MIDDLE_NAME).locator("body"),
-                description="Frame page -> middle frame",
-            ),
-            FrameNames.RIGHT_NAME: WebElement(
-                self.page.frame(name=FrameNames.RIGHT_NAME).locator("body"),
-                description="Frame page -> right frame",
-            ),
-            FrameNames.BOTTOM_NAME: WebElement(
-                self.page.frame(name=FrameNames.BOTTOM_NAME).locator("body"),
-                description="Frame page -> bottom frame",
-            ),
+            FrameNames.LEFT_NAME: self.frame_left,
+            FrameNames.MIDDLE_NAME: self.frame_middle,
+            FrameNames.RIGHT_NAME: self.frame_right,
+            FrameNames.BOTTOM_NAME: self.frame_bottom,
         }
