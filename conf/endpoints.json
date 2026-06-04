@@ -1,0 +1,12 @@
+{
+  "AlertPage": "/javascript_alerts",
+  "ContextMenuPage": "/context_menu",
+  "InfiniteScrollPage": "/infinite_scroll",
+  "MainWindowPage": "/windows",
+  "SliderPage": "/horizontal_slider",
+  "UploadPage": "/upload",
+  "DownloadPage": "/download",
+  "DynamicContentPage": "/dynamic_content",
+  "FramePage": "/nested_frames",
+  "HoverPage": "/hovers"
+}

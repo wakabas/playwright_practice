@@ -10,9 +10,9 @@ def verify_text(sub_page: NewWindowPage):
     )
 
 
-def test_new_window_page(page: Page, base_url: str):
+def test_new_window_page(page: Page, base_url: str, endpoint):
     main_page = MainWindowPage(page)
-    main_page.action.goto(f"{base_url}/windows")
+    main_page.action.goto(f"{base_url}{endpoint[main_page.__class__.__name__]}")
     sub_page_1 = main_page.switch_to_new_window()
     verify_text(sub_page_1)
     sub_page_2 = main_page.switch_to_new_window()

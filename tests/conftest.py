@@ -1,14 +1,14 @@
 from pathlib import Path
-from random import randrange
+import tempfile
+import os
 
 import faker
 import pytest
 
 from logger import setup_logger
-from pages.slider_page import SliderBoundaries
+from conf.config_reader import ConfigReader
 
 fake = faker.Faker()
-
 
 @pytest.fixture(scope="session", autouse=True)
 def init_logger():
@@ -18,6 +18,10 @@ def init_logger():
 @pytest.fixture(scope="session")
 def base_url():
     return "https://the-internet.herokuapp.com"
+
+@pytest.fixture
+def endpoint():
+    return ConfigReader("conf/endpoints.json")
 
 
 @pytest.fixture
@@ -30,20 +34,11 @@ def basic_auth_url():
 
 
 @pytest.fixture
-def get_slider_value() -> tuple[int, str]:
-    """Возвращает кол-во нажатия клавиши RightArrow и ожидаемое значение для аргумента .slider_value у экземпляра
-    SliderPage"""
-    value = randrange(SliderBoundaries.MIN, SliderBoundaries.MAX)
-    return value, f"{value / 2:.1f}" if value % 2 != 0 else f"{value / 2:.0f}"
-
-
-@pytest.fixture
 def tmp_text_file():
-    file_path = Path("tests/test_file.txt")
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(fake.text())
-    yield file_path
-    file_path.unlink()
+    with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".txt", encoding="utf-8") as tmp:
+        tmp.write(fake.text())
+    yield tmp.name
+    os.remove(tmp.name)
 
 
 @pytest.fixture

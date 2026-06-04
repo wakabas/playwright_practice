@@ -3,9 +3,9 @@ from playwright.sync_api import Page
 from pages.download_page import DownloadPage
 
 
-def test_download(page: Page, base_url: str, clear_filepath):
+def test_download(page: Page, base_url: str, endpoint, clear_filepath):
     download_page = DownloadPage(page)
-    download_page.action.goto(f"{base_url}/download")
+    download_page.action.goto(f"{base_url}{endpoint[download_page.__class__.__name__]}")
     expected_file_name = download_page.get_filename_for_download()
     received_file_name = download_page.get_downloaded_filename()
     assert expected_file_name == received_file_name, (

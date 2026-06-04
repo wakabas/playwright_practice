@@ -7,6 +7,7 @@ from ui.web_element import WebElement
 
 
 class FrameNames(StrEnum):
+    TOP_NAME = "frame-top"
     LEFT_NAME = "frame-left"
     MIDDLE_NAME = "frame-middle"
     RIGHT_NAME = "frame-right"
@@ -30,6 +31,33 @@ class FramePage(BasePage):
 
     def __init__(self, page: Page) -> None:
         super().__init__(page)
+        top_frame = self.page.frame_locator(f"frame[name='{FrameNames.TOP_NAME}']")
+
+        self.frame_left = WebElement(
+            top_frame.frame_locator(f"frame[name='{FrameNames.LEFT_NAME}']")
+            .locator("body"),
+            description="Frame page -> left frame"
+        )
+        self.frame_middle = WebElement(
+            top_frame.frame_locator(f"frame[name='{FrameNames.MIDDLE_NAME}']")
+            .locator("body"),
+            description="Frame page -> middle frame"
+        )
+        self.frame_right = WebElement(
+            top_frame.frame_locator(f"frame[name='{FrameNames.RIGHT_NAME}']")
+            .locator("body"),
+            description="Frame page -> right frame"
+        )
+        self.frame_bottom = WebElement(
+            self.page.frame_locator(f"frame[name='{FrameNames.BOTTOM_NAME}']")
+            .locator("body"),
+            description="Frame page -> bottom frame"
+        )
+
+    def get_frame_text(self, frame_name: StrEnum) -> str:
+        frame_attr = "_".join(frame_name.split('-'))
+        return self.__getattribute__(frame_attr).get_inner_text()
+
 
     @property
     def frames(self):

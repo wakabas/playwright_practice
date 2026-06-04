@@ -1,4 +1,5 @@
 from faker import Faker
+from playwright.sync_api import Page
 
 from pages.alert_page import AlertMessages, AlertPage, ResultMessages
 from pages.context_menu_page import ContextAlertMessage, ContextMenuPage
@@ -6,9 +7,9 @@ from pages.context_menu_page import ContextAlertMessage, ContextMenuPage
 fake = Faker()
 
 
-def test_js_alerts_page(page, base_url):
+def test_js_alerts_page(page: Page, base_url: str, endpoint):
     alert_page = AlertPage(page)
-    alert_page.action.goto(f"{base_url}/javascript_alerts")
+    alert_page.action.goto(f"{base_url}{endpoint[alert_page.__class__.__name__]}")
     received_alert_msg = alert_page.receive_msg_from_alert_btn()
     assert received_alert_msg == AlertMessages.ALERT_MSG, (
         f"Expected message {AlertMessages.ALERT_MSG} but got {received_alert_msg}"
@@ -38,9 +39,11 @@ def test_js_alerts_page(page, base_url):
     )
 
 
-def test_context_area_page(page, base_url):
+def test_context_area_page(page: Page, base_url: str, endpoint):
     context_menu_page = ContextMenuPage(page)
-    context_menu_page.action.goto(f"{base_url}/context_menu")
+    context_menu_page.action.goto(
+        f"{base_url}{endpoint[context_menu_page.__class__.__name__]}"
+    )
     received_message = context_menu_page.click_on_context_area()
     assert ContextAlertMessage.ALERT_MSG == received_message, (
         f"Expected message {ContextAlertMessage.ALERT_MSG} but got {received_message}"

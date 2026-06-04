@@ -1,7 +1,7 @@
 import pytest
 from playwright.sync_api import Page
 
-from pages.frame_page import FrameNames, FramePage
+from pages.frame_page import FrameNames, FramePage, FrameText
 
 
 @pytest.mark.parametrize(
@@ -16,8 +16,8 @@ from pages.frame_page import FrameNames, FramePage
 def test_frame_page(page: Page, base_url: str, frame_name: FrameNames):
     frame_page = FramePage(page)
     frame_page.action.goto(f"{base_url}/nested_frames")
-    frame_map = frame_page.frames
-    actual_text = frame_map[frame_name].get_inner_text()
-    assert actual_text == FramePage.FRAME_MAP[frame_name], (
-        f"Expected text - {FramePage.FRAME_MAP[frame_name]}, but got {actual_text}"
+    received_text = frame_page.get_frame_text(frame_name)
+    expected_text = FramePage.FRAME_MAP[frame_name]
+    assert received_text == expected_text, (
+        f"Expected text - {expected_text}, but got {received_text}"
     )
