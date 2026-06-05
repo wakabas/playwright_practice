@@ -1,8 +1,10 @@
+from pathlib import Path
+
 from playwright.sync_api import Page
 
 from pages.download_page import DownloadPage
 
-path = r"tests\downloaded_file\\"
+path = Path("tests\downloaded_file\\")
 
 def test_download(page: Page, base_url: str, endpoint, clear_filepath):
     download_page = DownloadPage(page)

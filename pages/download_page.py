@@ -15,11 +15,11 @@ class DownloadPage(BasePage):
             description="Download page -> links to download file",
         )
 
-    def get_downloaded_filename(self, path_to_download: str, index: int) -> str:
+    def get_downloaded_filename(self, path_to_download: Path, index: int) -> str:
         with self.action.expect_download() as download_info:
             self.file_for_download.nth(index).click()
         download = download_info.value
-        file_path = Path(path_to_download + download.suggested_filename)
+        file_path = Path(f"{path_to_download}/{download.suggested_filename}")
         download.save_as(file_path)
         if not file_path.exists():
             raise FileNotFoundError(f"File {file_path} does not exist")
