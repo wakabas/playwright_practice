@@ -1,17 +1,20 @@
-from playwright.sync_api import Locator, Page
+import logging
+
+from playwright.sync_api import Locator
 from typing_extensions import Self
 
+from logger import LOGGER_NAME
 from ui.web_element import WebElement
+
+logger = logging.getLogger(LOGGER_NAME)
 
 
 class MultiWebElement:
     def __init__(
-            self,
-            page: Page,
-            locator: Locator,
-            description: str,
+        self,
+        locator: Locator,
+        description: str,
     ) -> None:
-        self.page = page
         self.locator = locator
         self.description = description
         self.index = 0
@@ -24,10 +27,7 @@ class MultiWebElement:
         if self.index >= self.locator.count():
             raise StopIteration
 
-        element = WebElement(
-            locator=self.locator.nth(self.index),
-            description=f"{self.description}[{self.index}]",
-        )
+        element = self.nth(self.index)
 
         self.index += 1
         return element
@@ -61,6 +61,14 @@ class MultiWebElement:
             )
             for i, loc in enumerate(self.locator.all())
         ]
+
+    def wait_for_first_element(self):
+        logger.info(f"Waiting for first element {self}")
+        self.locator.first.wait_for(state="visible")
+
+    def wait_for_last_element(self):
+        logger.info(f"Waiting for last element {self}")
+        self.locator.last.wait_for(state="visible")
 
     def __str__(self) -> str:
         return f"MultiWebElement[{self.description}]"

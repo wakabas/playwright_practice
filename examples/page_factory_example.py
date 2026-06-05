@@ -21,7 +21,7 @@ class PageFactory:
         self.config = config
 
     @classmethod
-    def from_json(cls, browser: Browser, file_path: str) -> PageFactory:
+    def from_json(cls, browser: Browser, file_path: str) -> 'PageFactory':
         with open(file_path, encoding="utf-8") as config_file:
             config = json.load(config_file)
         return cls(browser, config)

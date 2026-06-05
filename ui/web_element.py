@@ -1,7 +1,8 @@
 import logging
 from pathlib import Path
 
-from playwright.sync_api import Locator, Page
+from playwright.sync_api import Locator
+from typing_extensions import Literal
 
 from logger import LOGGER_NAME
 
@@ -10,12 +11,10 @@ logger = logging.getLogger(LOGGER_NAME)
 
 class WebElement:
     def __init__(
-            self,
-            locator: Locator,
-            description: str,
-            page: Page | None =None,
+        self,
+        locator: Locator,
+        description: str,
     ) -> None:
-        self.page = page
         self.locator = locator
         self.description = description
 
@@ -64,6 +63,10 @@ class WebElement:
         logger.info(f"{self}: hover")
         self.locator.hover()
 
+    def is_visible(self) -> bool:
+        logger.info(f"{self}: check visibility")
+        return self.locator.is_visible()
+
     def scroll_into_view_if_needed(self) -> None:
         logger.info(f"{self}: scroll into view if needed")
         self.locator.scroll_into_view_if_needed()
@@ -71,3 +74,9 @@ class WebElement:
     def set_input_files(self, file_path: Path) -> None:
         logger.info(f"{self}: set input files '{file_path}'")
         self.locator.set_input_files(file_path)
+
+    def wait_for(
+        self, state: Literal["attached", "detached", "hidden", "visible"]
+    ) -> None:
+        logger.info(f"{self}: wait for '{state}'")
+        self.locator.wait_for(state=state)

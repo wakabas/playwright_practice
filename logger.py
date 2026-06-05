@@ -19,7 +19,7 @@ def setup_logger(name: str = LOGGER_NAME) -> logging.Logger:
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(formatter)
 
-    file_handler = logging.FileHandler("ui.log", encoding="utf-8")
+    file_handler = logging.FileHandler("ui.log", mode="w", encoding="utf-8")
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(formatter)
 
