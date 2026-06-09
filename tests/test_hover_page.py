@@ -2,7 +2,7 @@ import re
 
 from pages.hover_page import HoverPage, HtmlAttributes
 
-PATTERN = re.compile(f"^{HtmlAttributes.USERNAME}\d+")
+PATTERN = re.compile(rf"^{HtmlAttributes.USERNAME}\d+")
 
 
 def test_hover_page(page, base_url: str, endpoint):

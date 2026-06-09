@@ -10,3 +10,4 @@ Pygments==2.19.2
 pytest==9.0.2
 typing_extensions==4.15.0
 tzdata==2025.3
+pytest-playwright==0.8.0
